@@ -1,8 +1,39 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-width: 100%;
+}
+
+.CryptoInfos{
+  padding-top: 4em;
+}
+
+.MainTitle{
+  border-bottom: 1px solid #000000;
+  border-top: 1px solid #000000;
+}
+
+.MainTitle > h1{
+  padding-left: 2em;
+  color: #394082;
+}
+
+.PortfolioUl > li{
+  list-style: none;
+  color: #000000;
+  padding: 1em;
+}
+
+.AddTransactionBtn{
+  color: #000000;
+  padding: 3em;
+}
+
+.AssetsTable{
+  color: #000000;
+  padding: 1em;
+}
+
+.AssetsTable > th,td,tr{
+  padding: 2em;
 }
 
 .logo {
@@ -39,3 +70,5 @@
 .read-the-docs {
   color: #888;
 }
+
+
