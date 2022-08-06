@@ -1,7 +1,7 @@
 {
     "portfolios": [
       {
-        "name": "Portfolio1",
+        "name": "Portfolio 1",
         "cryptos":{
             "cardano":[
                 {
@@ -12,7 +12,7 @@
         }
       },
       {
-        "name": "Portfolio2",
+        "name": "Portfolio 2",
         "cryptos":{
             "cardano":[
                 {
@@ -25,7 +25,7 @@
                 {
                     "quantity": 2,
                     "pricePerCoin":3000
-                }
+                } 
             ]
         }
       }

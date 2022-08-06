@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import React from 'react'
 import Cookies from 'js-cookie'
 import reactLogo from './assets/react.svg'
@@ -6,23 +6,51 @@ import './App.css'
 import { HeaderComponent } from './Components/HeaderComponent'
 import { PortfolioList } from './Components/PortfolioList'
 import { AssetList } from './Components/AssetsList'
-import data from './Components/data/data.json'
+import {db} from './firebase-config'
+import {collection,getDocs} from 'firebase/firestore'
+import { AssetListItem } from './Components/AssetListItem'
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
-  var numbers = ["Portfolio1","Portafoglio2"]; 
-  //const portfolios = numbers.map(portfolioName => <p>{portfolioName.name}</p>)
-  //console.log(portfolios)
-  return (
+  
+  const [portfolios,setPortfolios] = useState([])
+  const portfoliosCollectionRef = collection(db,"portfolios")
+  useEffect(()=>{
     
+    const getPortfolios = async () =>{
+      const data = await getDocs(portfoliosCollectionRef)
+      setPortfolios(data.docs.map((doc)=>({
+        ...doc.data(), id: doc.id
+      })))
+      console.log(data.docs)
+    }
+
+    getPortfolios()
+    
+  }, [])
+
+  function addPortfolio(){
+
+  }
+
+  return (
+
     <div className='App'>
       <HeaderComponent />
-      <div className='BodyContent'>
-        <PortfolioList />
-        <AssetList />
+      <div>
+            <ul className="PortfolioUl">
+            </ul>
       </div>
+
+      <div className="AddTransactionBtn">Add transaction</div>
+
+      <button onClick={addPortfolio}>add portfolio</button>
+    
     </div>
+
   )
+
 }
 
 

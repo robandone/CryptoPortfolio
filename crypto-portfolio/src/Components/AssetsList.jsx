@@ -24,21 +24,12 @@ export function AssetList(){
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Cardano</td>
-                        <td>20.65</td>
-                        <td>+5%</td>
-                        <td>$500</td>
-                        <td>+$344</td>
+                      {portfolios.map((portfolios)=>{
+                        return <AssetListItem key={portfolios.transactions} transactrions={portfolios.transactions}></AssetListItem>
+                      })}
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                    <td>Cardano2</td>
-                        <td>560.65</td>
-                        <td>+13%</td>
-                        <td>$270</td>
-                        <td>+$54</td>
-                    </tr>
+                <tfoot> 
                 </tfoot>
             </table>
             
