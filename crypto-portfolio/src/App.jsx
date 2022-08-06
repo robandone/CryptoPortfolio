@@ -7,13 +7,14 @@ import { HeaderComponent } from './Components/HeaderComponent'
 import { PortfolioList } from './Components/PortfolioList'
 import { AssetList } from './Components/AssetsList'
 import {db} from './firebase-config'
-import {collection,getDocs} from 'firebase/firestore'
+import {collection,getDocs,addDoc} from 'firebase/firestore'
 import { AssetListItem } from './Components/AssetListItem'
 
 
 
 function App() {
   
+  const [newName, setNewName] = useState("New Portfolio")
   const [portfolios,setPortfolios] = useState([])
   const portfoliosCollectionRef = collection(db,"portfolios")
   useEffect(()=>{
@@ -22,38 +23,47 @@ function App() {
       const data = await getDocs(portfoliosCollectionRef)
       setPortfolios(data.docs.map((doc)=>({
         ...doc.data(), id: doc.id
-      })))
-      console.log(data.docs)
+      })))}
+
+      
+    getPortfolios()
+  },[portfolios])
+  
+  
+  
+  const addPortfolio = async () =>{
+       
+      await addDoc(portfoliosCollectionRef,{name: newName+" "+(portfolios.length+1), transactions : [""]})  
+      
     }
 
-    getPortfolios()
-    
-  }, [])
-
-  function addPortfolio(){
-
+  const selectPortfolio = () =>{
+    console.log("portfolio selected")
   }
-
+  
   return (
 
     <div className='App'>
       <HeaderComponent />
+      
+      <button onClick={addPortfolio}>add portfolio</button>
       <div>
             <ul className="PortfolioUl">
+              {portfolios.map((portfolios)=>{
+                return <li key={portfolios.name} onClick={selectPortfolio}>{portfolios.name}</li>
+              })}
             </ul>
       </div>
+      <AssetList />
 
-      <div className="AddTransactionBtn">Add transaction</div>
+      
 
-      <button onClick={addPortfolio}>add portfolio</button>
+      
     
     </div>
 
   )
 
 }
-
-
-
 
 export default App

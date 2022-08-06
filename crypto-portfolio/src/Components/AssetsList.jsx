@@ -10,7 +10,6 @@ export function AssetList(){
                 <li>Bitcoin</li>
             </ul> */}
 
-            <div className="AddTransactionBtn">Add transaction</div>
 
             <table className="AssetsTable">
                 <thead>
@@ -24,9 +23,9 @@ export function AssetList(){
                 </thead>
                 <tbody>
                     <tr>
-                      {portfolios.map((portfolios)=>{
-                        return <AssetListItem key={portfolios.transactions} transactrions={portfolios.transactions}></AssetListItem>
-                      })}
+                      {/* {portfolios.map((portfolios)=>{
+                        return <AssetListItem key={portfolios.transactions} transactions={portfolios.transactions}></AssetListItem>
+                      })} */}
                     </tr>
                 </tbody>
                 <tfoot> 
