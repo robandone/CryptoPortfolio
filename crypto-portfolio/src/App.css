@@ -16,6 +16,27 @@
   color: #394082;
 }
 
+.MainContent{
+  display: table;
+  width: 100%;
+}
+
+.PortfoliosListDiv{
+  float: left;
+}
+
+
+.AssetsTable{
+  width: 70%;
+  float: left;
+  min-width: 50%;
+  padding-left: 4em;
+}
+
+th{
+  height: 50px;
+}
+
 .PortfolioUl > li{
   list-style: none;
   color: #000000;

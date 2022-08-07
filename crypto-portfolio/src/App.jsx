@@ -14,48 +14,53 @@ import { AssetListItem } from './Components/AssetListItem'
 
 function App() {
   
-  const [newName, setNewName] = useState("New Portfolio")
+  const [selectedPortfolio,setSelectedPortfolio] = useState("Portfolio 1")
   const [portfolios,setPortfolios] = useState([])
   const portfoliosCollectionRef = collection(db,"portfolios")
-  useEffect(()=>{
-    
-    const getPortfolios = async () =>{
-      const data = await getDocs(portfoliosCollectionRef)
-      setPortfolios(data.docs.map((doc)=>({
-        ...doc.data(), id: doc.id
-      })))}
+  
+  const getPortfolios = async () =>{
+    const data = await getDocs(portfoliosCollectionRef)
+    setPortfolios(data.docs.map((doc)=>({
+      ...doc.data(), id: doc.id
+    })))}
 
-      
+  useEffect(()=>{
+
     getPortfolios()
-  },[portfolios])
+    
   
-  
+  },[])
   
   const addPortfolio = async () =>{
        
-      await addDoc(portfoliosCollectionRef,{name: newName+" "+(portfolios.length+1), transactions : [""]})  
-      
+      await addDoc(portfoliosCollectionRef,{name: "New Portfolio "+(portfolios.length+1), transactions : [""]})  
+      getPortfolios()
+      console.log(portfolios)
     }
 
-  const selectPortfolio = () =>{
-    console.log("portfolio selected")
+  const selectPortfolio = (event) =>{
+    setSelectedPortfolio(event.childNodes[0].textContent)
   }
   
+  const ulElements = portfolios.map((portfolios)=>{
+    return <li key={portfolios.name} onClick={e => selectPortfolio(e.target)}>{portfolios.name}</li>
+  })
+
   return (
 
     <div className='App'>
       <HeaderComponent />
-      
-      <button onClick={addPortfolio}>add portfolio</button>
-      <div>
-            <ul className="PortfolioUl">
-              {portfolios.map((portfolios)=>{
-                return <li key={portfolios.name} onClick={selectPortfolio}>{portfolios.name}</li>
-              })}
-            </ul>
+      <div className='MainContent'>
+        
+        <div className='PortfoliosListDiv'>
+              
+              <ul className="PortfolioUl">
+                {ulElements}
+                <li onClick={addPortfolio}>Add Portfolio +</li>
+              </ul>
+        </div>
+        <AssetList allPort={portfolios} selectedPort={selectedPortfolio}/>
       </div>
-      <AssetList />
-
       
 
       
