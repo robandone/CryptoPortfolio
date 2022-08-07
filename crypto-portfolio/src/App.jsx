@@ -1,23 +1,19 @@
 import { useState,useEffect } from 'react'
 import React from 'react'
-import Cookies from 'js-cookie'
-import reactLogo from './assets/react.svg'
 import './App.css'
 import { HeaderComponent } from './Components/HeaderComponent'
-import { PortfolioList } from './Components/PortfolioList'
 import { AssetList } from './Components/AssetsList'
 import {db} from './firebase-config'
 import {collection,getDocs,addDoc} from 'firebase/firestore'
-import { AssetListItem } from './Components/AssetListItem'
 
 
 
 function App() {
   
-  const [selectedPortfolio,setSelectedPortfolio] = useState("Portfolio 1")
+  const [selectedPortfolio,setSelectedPortfolio] = useState("")
   const [portfolios,setPortfolios] = useState([])
   const portfoliosCollectionRef = collection(db,"portfolios")
-  
+
   const getPortfolios = async () =>{
     const data = await getDocs(portfoliosCollectionRef)
     setPortfolios(data.docs.map((doc)=>({

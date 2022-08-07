@@ -37,6 +37,10 @@ th{
   height: 50px;
 }
 
+tr{
+  text-align: center;
+}
+
 .PortfolioUl > li{
   list-style: none;
   color: #000000;
