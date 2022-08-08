@@ -3,29 +3,32 @@ import {useEffect,useState} from 'react'
 
 export function AssetListItem(props){
 
-    const [coinData,setCoinData] = useState(props.coinGeckoApiData)
+    const [currentPrice,setCurrentPrice] = useState(0)
+    const [priceChange24h,setPriceChange24h] = useState(0)
     const ticker = props.infos.split("/")[0]
-    const totalAmount = props.infos.split("/")[1]
-    
-
+    const totalAmountSpentInDollars = parseInt(props.infos.split("/")[1])
+    const totalCoins = parseFloat(props.infos.split("/")[2])
 
     useEffect(()=>{
         getCoinData()
-        //console.log(coinData)
-        console.log(coinData.price_change_percentage_24h)
-        
-    },[])
+    })
 
     const getCoinData = () =>{
-        coinData.forEach((data)=>{
+        props.coinGeckoApiData.forEach((data)=>{
             if (data.symbol == ticker.toLowerCase()){
-                setCoinData(data)
+                setCurrentPrice(data.current_price)
+                setPriceChange24h(data.price_change_percentage_24h.toFixed(2))
             }
         })
     }
 
-    const currentPrice = coinData.current_price
-    const priceChange24h = coinData.price_change_percentage_24h
+    //console.log(ticker + "    total coins "+totalCoins+"/current price"+currentPrice)
+    const totalAmount= (totalCoins * currentPrice).toFixed(2)
+    var profitLoss = (totalAmount - totalAmountSpentInDollars).toFixed(2)
+
+    if(profitLoss >= 0){
+        profitLoss = "+"+profitLoss
+    }
 
     return(
         <tr>
@@ -33,7 +36,7 @@ export function AssetListItem(props){
             <td>{currentPrice}</td>
             <td>{priceChange24h}</td>
             <td>{totalAmount}</td>
-            <td>TO DO</td>
+            <td>{profitLoss}</td>
         </tr>
     )
 

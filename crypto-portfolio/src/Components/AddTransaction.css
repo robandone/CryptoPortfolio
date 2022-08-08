@@ -1,0 +1,46 @@
+.transactionPopup{
+    color: black;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-inner{
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 300px;
+    min-height:400px;
+    background-color: #FFF;
+}
+
+.liCryptoImage{
+    width: 30px;
+    height:30px;
+}
+
+.searchBox{
+    background-color: white;
+    border-color: black;
+    border-width: 1px;
+    color: black;
+    min-height: 20px;
+}
+
+
+.scrollableListDiv{
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
+.popup-inner .close-btn{
+    position:absolute;
+    top: 16px;
+    right: 16px;
+}

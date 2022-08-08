@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import { HeaderComponent } from './Components/HeaderComponent'
 import { AssetList } from './Components/AssetsList'
+import { AddTransaction } from './Components/AddTransaction'
 import {db} from './firebase-config'
 import {collection,getDocs,addDoc} from 'firebase/firestore'
 
@@ -10,6 +11,7 @@ import {collection,getDocs,addDoc} from 'firebase/firestore'
 
 function App() {
   
+  const [buttonPopup,setButtonPopup] = useState(false)
   const [selectedPortfolio,setSelectedPortfolio] = useState("")
   const [portfolios,setPortfolios] = useState([])
   const portfoliosCollectionRef = collection(db,"portfolios")
@@ -56,8 +58,12 @@ function App() {
               </ul>
         </div>
         <AssetList allPort={portfolios} selectedPort={selectedPortfolio}/>
+
       </div>
-      
+      <button onClick={()=> setButtonPopup(true)}>Add transaction</button>
+      <AddTransaction trigger={buttonPopup} setTrigger={setButtonPopup}>
+      <h3>Select coin</h3>
+      </AddTransaction>
 
       
     

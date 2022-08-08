@@ -18,14 +18,24 @@ export function AssetList(props){
         
         axios.get(url).then((response) =>{
             setApiData(response.data)
-            console.log(response.data)
+            
         }).catch((error) => {
             console.log(error)
         })
 
+        setInterval(()=>{
+            axios.get(url).then((response) =>{
+                setApiData(response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
+        },10000)
+        
+
         getGeneralInfos(portfolios,selectedPortfolio)
         generalInfos.forEach((value,key) =>{
             generalInfosArray.push(key+"/"+value)
+            console.log(key + "   value"+value)
         })
 
 
@@ -40,9 +50,10 @@ export function AssetList(props){
             if (ports[i].name == selectedPort){
                 ports[i].transactions.forEach(element => {
                     if(generalInfos.get(element.cryptoname) == undefined){
-                        generalInfos.set(element.cryptoname,(element.amount * element.pricepercoin))
+                        generalInfos.set(element.cryptoname,(element.amount * element.pricepercoin)+"/"+element.amount)
+                        //console.log(element.cryptoname+"   element.amount"+element.amount)
                     }else{
-                        generalInfos.set(element.cryptoname,((element.amount * element.pricepercoin)+generalInfos.get(element.cryptoname)))
+                        generalInfos.set(element.cryptoname,((element.amount * element.pricepercoin)+parseInt(generalInfos.get(element.cryptoname).split("/")[0]))+"/"+(parseInt(generalInfos.get(element.cryptoname).split("/")[1])+parseInt(element.amount)))
                     }
                 });
             }
