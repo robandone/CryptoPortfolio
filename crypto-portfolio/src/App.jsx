@@ -6,20 +6,20 @@ import { AssetList } from './Components/AssetsList'
 import { AddTransaction } from './Components/AddTransaction'
 import { SelectTransactionDetails } from './Components/SelectTransactionDetails'
 import { db } from './firebase-config'
-import { collection, getDocs, addDoc, doc, setDoc,arrayUnion } from 'firebase/firestore'
+import { collection, getDocs, addDoc, doc, setDoc, arrayUnion,deleteDoc } from 'firebase/firestore'
 
 
 
 function App() {
 
-  const [allCryptosValue,setAllCryptosValue] = useState(0)
-  const [totalVariation,setTotalVariation] = useState(0)
+  const [allCryptosValue, setAllCryptosValue] = useState(0)
+  const [totalVariation, setTotalVariation] = useState(0)
   const [chosenCrypto, setChosenCrypto] = useState()
   const [transactionPopup, setTransactionPopup] = useState(false)
   const [buttonPopup, setButtonPopup] = useState(false)
   const [selectedPortfolio, setSelectedPortfolio] = useState("noportfolioselected")
   const [portfolios, setPortfolios] = useState([])
-  const [transaction, setTransaction] = useState({ cryptoname: "", amount: 0, pricepercoin: 0 })
+  const [transaction, setTransaction] = useState({ cryptoname: "", amount: 0, pricepercoin: 0 ,timestamp:Date.now()})
   const portfoliosCollectionRef = collection(db, "portfolios")
 
   const getPortfolios = async () => {
@@ -37,12 +37,12 @@ function App() {
 
   useEffect(() => {
 
-    if (transaction.cryptoname != ""){
+    if (transaction.cryptoname != "") {
       console.log("record transaction")
       updatePortfolio()
     }
-    
-      
+
+
   }, [transaction])
 
   const addPortfolio = async () => {
@@ -60,9 +60,22 @@ function App() {
     return <li key={portfolios.name} onClick={e => selectPortfolio(e.target)}>{portfolios.name}</li>
   })
 
+
+  const getIdOfSelectedPortfolio = ()=>{
+    var id = ""
+    for(let i = 0;i<portfolios.length;i++){
+      if(portfolios[i].name == selectedPortfolio){
+        id = portfolios[i].id
+      }
+      
+    }
+    return id
+  }
+
   const updatePortfolio = async () => {
-    const portDoc = doc(db, "portfolios", "3sl2pUcaIRhspDwK1SEw")
-    await setDoc(portDoc, {transactions : arrayUnion(transaction)},{merge:true})
+    const id = getIdOfSelectedPortfolio()
+    const portDoc = doc(db, "portfolios", id)
+    await setDoc(portDoc, { transactions: arrayUnion(transaction) }, { merge: true })
     getPortfolios()
   }
 
@@ -93,7 +106,7 @@ function App() {
         <AssetList allPort={portfolios} selectedPort={selectedPortfolio} />
 
       </div>
-      
+
       <AddTransaction trigger={buttonPopup} setTrigger={setButtonPopup} transactionCallback={setTransactionPopup} chosenCryptoCallback={setChosenCrypto}>
         <h3>Select coin</h3>
       </AddTransaction>
