@@ -41,9 +41,12 @@ export function AssetListItem(props){
 
     }
 
+    const openTVGraph = ()=>{
+        props.openTradingViewPopup(true)
+    }
 
     return(
-        <tr>
+        <tr onClick={openTVGraph}>
             <td>{ticker}</td>
             <td>{currentPrice}</td>
             <td className={priceChange24hColor}>{priceChange24h+"%"}</td>

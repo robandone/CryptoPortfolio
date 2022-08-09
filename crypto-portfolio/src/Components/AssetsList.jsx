@@ -65,7 +65,7 @@ export function AssetList(props) {
 
 
 
-    const AssetListItems = ListItems.map(element => <AssetListItem key={element} infos={element} coinGeckoApiData={apiData}></AssetListItem>)
+    const AssetListItems = ListItems.map(element => <AssetListItem key={element} infos={element} coinGeckoApiData={apiData} openTradingViewPopup={props.openTradingViewPopup}></AssetListItem>)
 
     return (
         <div className="AssetListDiv">

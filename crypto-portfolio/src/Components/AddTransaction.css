@@ -22,6 +22,17 @@
     border-radius: 10px;
 }
 
+.popup-inner-tv{
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 1000px;
+    min-height:400px;
+    background-color: #FFF;
+    align-items: center;
+    border-radius: 10px;
+}
+
 .liCryptoImage{
     width: 30px;
     height:30px;
