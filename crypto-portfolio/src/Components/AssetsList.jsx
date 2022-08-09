@@ -33,6 +33,7 @@ export function AssetList(props){
         
 
         getGeneralInfos(portfolios,selectedPortfolio)
+        generalInfosArray = []
         generalInfos.forEach((value,key) =>{
             generalInfosArray.push(key+"/"+value)
             console.log(key + "   value"+value)
@@ -42,7 +43,7 @@ export function AssetList(props){
         setListItems(generalInfosArray)
         
         
-    },[selectedPortfolio])
+    },[selectedPortfolio,portfolios])
 
     const getGeneralInfos = (ports,selectedPort) =>{
 

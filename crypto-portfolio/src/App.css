@@ -96,4 +96,11 @@ tr{
   color: #888;
 }
 
+.redPercentage{
+  color:#cc0000
+}
+
+.greenPercentage{
+  color:rgb(0, 165, 0)
+}
 

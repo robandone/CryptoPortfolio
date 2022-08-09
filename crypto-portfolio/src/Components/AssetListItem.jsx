@@ -1,16 +1,18 @@
 import React from "react";
 import {useEffect,useState} from 'react'
-
+import '../App.css'
 export function AssetListItem(props){
 
     const [currentPrice,setCurrentPrice] = useState(0)
     const [priceChange24h,setPriceChange24h] = useState(0)
+    const [priceChange24hColor,setPriceChange24hColor] = useState("black")
     const ticker = props.infos.split("/")[0]
     const totalAmountSpentInDollars = parseInt(props.infos.split("/")[1])
     const totalCoins = parseFloat(props.infos.split("/")[2])
 
     useEffect(()=>{
         getCoinData()
+        setColor()
     })
 
     const getCoinData = () =>{
@@ -30,11 +32,21 @@ export function AssetListItem(props){
         profitLoss = "+"+profitLoss
     }
 
+    const setColor = ()=>{
+        if(priceChange24h>=0){
+            setPriceChange24hColor("greenPercentage")        
+        }else{
+            setPriceChange24hColor("redPercentage")
+        }
+
+    }
+
+
     return(
         <tr>
             <td>{ticker}</td>
             <td>{currentPrice}</td>
-            <td>{priceChange24h}</td>
+            <td className={priceChange24hColor}>{priceChange24h+"%"}</td>
             <td>{totalAmount}</td>
             <td>{profitLoss}</td>
         </tr>
