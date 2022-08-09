@@ -19,7 +19,7 @@ function App() {
   const [transactionPopup, setTransactionPopup] = useState(false)
   const [buttonPopup, setButtonPopup] = useState(false)
   const [TradingViewPopup, setTradingViewPopup] = useState(false)
-  const [selectedPortfolio, setSelectedPortfolio] = useState("noportfolioselected")
+  const [selectedPortfolio, setSelectedPortfolio] = useState("Select a portfolio")
   const [portfolios, setPortfolios] = useState([])
   const [transaction, setTransaction] = useState({ cryptoname: "", amount: 0, pricepercoin: 0, timestamp: Date.now() })
   const portfoliosCollectionRef = collection(db, "portfolios")
@@ -98,7 +98,7 @@ function App() {
 
   const checkIfPortfolioIsSelected = () => {
 
-    if (selectedPortfolio != "noportfolioselected") {
+    if (selectedPortfolio != "Select a portfolio") {
       setButtonPopup(true)
     } else {
       alert("Select a porfolio first.")

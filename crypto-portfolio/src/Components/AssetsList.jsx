@@ -69,6 +69,7 @@ export function AssetList(props) {
 
     return (
         <div className="AssetListDiv">
+            <h3>{selectedPortfolio}</h3>
             <table className="AssetsTable">
                 <thead>
                     <tr>
