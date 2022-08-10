@@ -63,9 +63,9 @@ export function AssetListItem(props){
     return(
         <tr>
             <td onClick={openTVGraph}><img className="cryptoImage" src={imgUrl}/><p>{ticker}</p></td>
-            <td>{currentPrice}</td>
+            <td>{"$"+currentPrice}</td>
             <td className={priceChange24hColor}>{priceChange24h+"%"}</td>
-            <td>{totalAmount}</td>
+            <td>{"$"+totalAmount}</td>
             <td>{profitLoss}</td>
         </tr>
     )
