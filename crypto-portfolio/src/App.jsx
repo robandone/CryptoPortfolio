@@ -19,6 +19,7 @@ function App() {
   const [transactionPopup, setTransactionPopup] = useState(false)
   const [buttonPopup, setButtonPopup] = useState(false)
   const [TradingViewPopup, setTradingViewPopup] = useState(false)
+  const [selectedPortfolioId,setSelectedPortfolioId] = useState("")
   const [selectedPortfolio, setSelectedPortfolio] = useState("Select a portfolio")
   const [portfolios, setPortfolios] = useState([])
   const [transaction, setTransaction] = useState({ cryptoname: "", amount: 0, pricepercoin: 0, timestamp: Date.now() })
@@ -34,6 +35,7 @@ function App() {
   useEffect(() => {
 
     getPortfolios()
+    console.log(portfolios)
 
   }, [])
 
@@ -53,13 +55,19 @@ function App() {
 
   const addPortfolio = async () => {
 
-    await addDoc(portfoliosCollectionRef, { name: "New Portfolio " + (portfolios.length + 1), transactions: [] })
-    getPortfolios()
-    console.log(portfolios)
+    let newNamePrompt = prompt("Select a name for your portfolio")
+    if (newNamePrompt != null) {
+      console.log(newNamePrompt)
+      await addDoc(portfoliosCollectionRef, { name: newNamePrompt, transactions: [] })
+      getPortfolios()
+      console.log(portfolios)
+    }
+
   }
 
   const selectPortfolio = (event) => {
     setSelectedPortfolio(event.childNodes[0].textContent)
+    setSelectedPortfolioId(event.id)
   }
 
 
@@ -70,7 +78,7 @@ function App() {
   const getIdOfSelectedPortfolio = () => {
     var id = ""
     for (let i = 0; i < portfolios.length; i++) {
-      if (portfolios[i].name == selectedPortfolio) {
+      if (portfolios[i].name == elementId) {
         id = portfolios[i].id
       }
 
@@ -78,11 +86,10 @@ function App() {
     return id
   }
 
-  const removePortfolio = async () => {
+  const removePortfolio = async (e) => {
     var dialog = confirm("Are you sure you want to delete this portfolio?");
     if (dialog) {
-      const id = getIdOfSelectedPortfolio()
-      const portDoc = doc(db, "portfolios", id)
+      const portDoc = doc(db, "portfolios", e.target.id)
       await deleteDoc(portDoc)
       getPortfolios()
     }
@@ -90,8 +97,7 @@ function App() {
   }
 
   const updatePortfolio = async () => {
-    const id = getIdOfSelectedPortfolio()
-    const portDoc = doc(db, "portfolios", id)
+    const portDoc = doc(db, "portfolios", selectedPortfolioId)
     await setDoc(portDoc, { transactions: arrayUnion(transaction) }, { merge: true })
     getPortfolios()
   }
@@ -109,7 +115,7 @@ function App() {
 
 
   const ulElements = portfolios.map((portfolios) => {
-    return <div className='ulElement'><li className='liElement' key={portfolios.name} onClick={e => selectPortfolio(e.target)}>{portfolios.name}</li><p onClick={removePortfolio}>X</p></div>
+    return <div className='ulElement'><li className='liElement' key={portfolios.id} id={portfolios.id} onClick={e => selectPortfolio(e.target)}>{portfolios.name}</li><p className='deletePortfolio' id={portfolios.id} onClick={e => removePortfolio(e)}>❌</p></div>
   })
 
   return (
@@ -117,15 +123,15 @@ function App() {
     <div className='App'>
       <HeaderComponent />
       <div className='MainContent'>
-        <button onClick={checkIfPortfolioIsSelected}>Add transaction</button>
+        <button onClick={checkIfPortfolioIsSelected} className="addTransactionBtn">Add transaction</button>
         <div className='PortfoliosListDiv'>
 
-          <ul className="PortfolioUl">
+          <ul className="portfolioUl">
             {ulElements}
-            <li onClick={addPortfolio}>Add Portfolio +</li>
+            <li className='liElement' onClick={addPortfolio}>Add Portfolio +</li>
           </ul>
         </div>
-        <AssetList allPort={portfolios} selectedPort={selectedPortfolio} openTradingViewPopup={setTradingViewPopup} />
+        <AssetList allPort={portfolios} selectedPort={selectedPortfolio} selectedPortId={selectedPortfolioId} openTradingViewPopup={setTradingViewPopup} />
 
       </div>
 

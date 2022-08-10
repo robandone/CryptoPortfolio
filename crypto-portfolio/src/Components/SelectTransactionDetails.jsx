@@ -8,7 +8,10 @@ export function SelectTransactionDetails(props) {
     const [operationHasBeenSelected,setOperationHasBeenSelected] = useState(false)
     const [isShown, setIsShown] = useState(false)
     const [selectedOperation, setSelectedOperation] = useState("Buy")
+    const [quantity,setQuantity] = useState(0)
+    const [pricePerCoin,setPricePerCoin] = useState(0)
     const buySellDivs = document.getElementsByClassName("buySellButton")
+
 
     useEffect(() => {
 
@@ -73,10 +76,13 @@ export function SelectTransactionDetails(props) {
                         Sell
                     </div>
                 </div>
-                <div><img src={props.chosenCrypto.image} className="liCryptoImage" />{props.chosenCrypto.name}</div>
-                <p>Quantity</p><input type="number" className='searchBox' id='quantity' defaultValue={0} />
-                <p>Price per coin</p><input type="number" className='searchBox' id='pricepercoin' defaultValue={0} />
-                <button className='addTransactionBtn' onClick={execTransaction}>Add Transaction</button>
+                <div className='selectedCrypto'><img src={props.chosenCrypto.image} className="liCryptoImage" /><p className='selectedCryptoP'>{props.chosenCrypto.name}</p></div>
+                <p>Quantity</p><input type="number" className='searchBox' id='quantity' defaultValue={0} onChange={(e)=>setQuantity(e.target.value)}/>
+                <p>Price per coin</p><input type="number" className='searchBox' id='pricepercoin' defaultValue={0} onChange={(e)=>setPricePerCoin(e.target.value)}/>
+                <div className='totalAmountSpentTransaction'>
+                    <p>Total Amount   ${quantity * pricePerCoin}</p>
+                </div>
+                <div className='addTransactionBtnDiv'><button onClick={execTransaction}>Add Transaction</button></div>
             </div>
         </div>
     ) : ""

@@ -50,6 +50,21 @@
 .scrollableListDiv{
     max-height: 350px;
     overflow-y: scroll;
+    scrollbar-color: red;
+}
+
+.cryptosList{
+    list-style-type: none;
+}
+
+.selectedCrypto{
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.selectedCryptoP{
+    padding-left: 5px;
 }
 
 .buySellContainer{
@@ -79,6 +94,7 @@
     caret-color: transparent;
 }
 
-.addTransactionBtn{
-    caret-color: transparent;
+.addTransactionBtnDiv{
+    display: flex;
+    justify-content: center;
 }
